@@ -1,4 +1,4 @@
-# tests/test_sweets.py
+
 import sys
 import os
 # Add the parent directory (backend/) to the system path
@@ -35,7 +35,7 @@ def app():
         admin.set_password('secure_admin')
         db.session.add(admin)
 
-        sweet = Sweet(name='Chocolate Bar', category='Candy', price=2.50, quantity=100)
+        sweet = Sweet(name='Chocolate Bar', price=2.50,category="chocolate" ,quantity=100)
         db.session.add(sweet)
 
         db.session.commit()

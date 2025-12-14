@@ -241,7 +241,7 @@ def create_app(test_config=None):
     @jwt_required()
     def update_sweet_details(sweet_id):
 
-        sweet = Sweet.query.get(sweet_id)
+        sweet = db.session.get(Sweet, sweet_id)
         data = request.json
          
         if 'name' in data :
@@ -332,12 +332,12 @@ def create_app(test_config=None):
     def delete_sweet(sweet_id):
          
         current_user_id = get_jwt_identity() 
-        current_user = User_Details.query.get(current_user_id)
+        current_user = db.session.get(User_Details, current_user_id)
 
         if not current_user or current_user.role != 'admin':
           return jsonify({"message": "Access Forbidden: Admin privileges required"}), 403
         
-        sweet =Sweet.query.get(sweet_id)
+        sweet = db.session.get(Sweet, sweet_id)
 
         if not sweet:
             return jsonify(
@@ -364,7 +364,7 @@ def create_app(test_config=None):
         
         # 1. Check if the sweet exists (404 Not Found)
         current_id= get_jwt_identity()
-        sweet = Sweet.query.get(sweet_id)
+        sweet = db.session.get(Sweet, sweet_id)
         if sweet is None:
             return jsonify({"message": f"Sweet with ID {sweet_id} not found"}), 404
 
@@ -419,12 +419,12 @@ def create_app(test_config=None):
 
 
         current_user_id = get_jwt_identity() 
-        current_user = User_Details.query.get(current_user_id)
+        current_user = db.session.get(User_Details, current_user_id)
         current_user_role = current_user.role
         if not current_user or current_user_role.lower() != 'admin':
          return jsonify({"message": "Access Forbidden: Admin privileges required"}), 403 # 403 Forbidden
         # 1. Check if the sweet exists (404 Not Found)
-        sweet = Sweet.query.get(sweet_id)
+        sweet = db.session.get(Sweet, sweet_id)
         if sweet is None:
             return jsonify({"message": f"Sweet with ID {sweet_id} not found"}), 404
 
