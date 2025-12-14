@@ -418,11 +418,11 @@ def create_app(test_config=None):
         
 
 
-       # current_user_id = get_jwt_identity() 
-       # current_user = User_Details.query.get(current_user_id)
-       # current_user_role = current_user.role
-       # if not current_user or current_user_role.lower() != 'admin':
-        # return jsonify({"message": "Access Forbidden: Admin privileges required"}), 403 # 403 Forbidden
+        current_user_id = get_jwt_identity() 
+        current_user = User_Details.query.get(current_user_id)
+        current_user_role = current_user.role
+        if not current_user or current_user_role.lower() != 'admin':
+         return jsonify({"message": "Access Forbidden: Admin privileges required"}), 403 # 403 Forbidden
         # 1. Check if the sweet exists (404 Not Found)
         sweet = Sweet.query.get(sweet_id)
         if sweet is None:
