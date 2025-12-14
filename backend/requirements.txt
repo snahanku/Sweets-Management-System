@@ -1,0 +1,9 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-JWT-Extended==4.6.0
+Werkzeug==3.0.1  # Core utility for security (password hashing)
+python-dotenv==1.0.1  # Recommended for loading environment variables (like SECRET_KEY)
+
+# --- Development & Testing Dependencies ---
+pytest==8.0.0
+SQLAlchemy==2.0.28 # Explicitly listing to ensure compatibility with Flask-SQLAlchemy 3.x
