@@ -1,19 +1,17 @@
 
 import sys
 import os
-# Add the parent directory (backend/) to the system path
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 import json
-# You must import your application's components (create_app, db, User_Details)
 from app import create_app, db, User_Details 
-# NOTE: Make sure the import path 'backend.app' is correct for your structure.
 
-# --- 1. The 'app' Fixture (REQUIRED for 'client') ---
+#----app fixature essential for client ----
+## used in memory db to test authentication test cases
 @pytest.fixture()
 def app():
-    # Use an in-memory database for testing
     app = create_app({
         'TESTING': True,
         'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
@@ -28,13 +26,13 @@ def app():
         # Drop all tables after the tests finish
         db.drop_all()
 
-# --- 2. The 'client' Fixture (REQUIRED by your test function) ---
+# ---  The 'client' Fixture (REQUIRED by your test function) ---
 # This fixture uses the 'app' fixture automatically.
 @pytest.fixture()
 def client(app):
     return app.test_client()
 
-# --- 3. The 'user_data' Fixture (REQUIRED by your test function) ---
+#  The 'user_data' Fixture (REQUIRED by your test function) ---
 @pytest.fixture
 def user_data():
     return {
@@ -44,40 +42,40 @@ def user_data():
 
 
 def test_register_user_success(client, user_data):
-    """Tests successful user registration."""
+    #Tests successful user registration.
     response = client.post(
         '/auth/register',
         data=json.dumps(user_data),
         content_type='application/json'
     )
-    assert response.status_code == 200
+    assert response.status_code == 200 ### check for valid ok http response
     data = response.get_json()
     assert 'user registered successfully' in data['message']
     assert data['user-details']['user-name'] == 'testuser'
 
 
 def test_register_duplicate_user_exist(client, user_data):
-    """Tests that registering the same user twice fails."""
-    # First registration (Success)
+    # Tests that registering the same user twice should fail"""
+    #--First registration (Success)--
     client.post(
         '/auth/register',
         data=json.dumps(user_data),
         content_type='application/json'
     )
 
-    # Second registration (Should fail)
+    # ---Second registration--
     response = client.post(
         '/auth/register',
         data=json.dumps(user_data),
         content_type='application/json'
     )
-    assert response.status_code == 200 # Note: Your current code returns 200 with an error message
+    assert response.status_code == 200 # current code returns 200 with an error message
     data = response.get_json()
-    assert 'user already exisit' in data['message'] # Use the exact message from your code
+    assert 'user already exisit' in data['message']
     
 
 def test_register_missing_fields_fails(client):
-    
+    # Test to check if all fields are present and not missing
     response = client.post(
         '/auth/register',
         data=json.dumps({"username": "missingpass"}),
@@ -92,27 +90,27 @@ def test_register_missing_fields_fails(client):
 
 def test_login_success(client, user_data):
     """Tests successful user login after registration."""
-    # 1. Register the user first
+    #  Register the user first
     client.post('/auth/register', data=json.dumps(user_data), content_type='application/json')
     
-    # 2. Attempt login
+    # Attempt login
     response = client.post(
         '/auth/login',
         data=json.dumps(user_data),
         content_type='application/json'
     )
-    assert response.status_code == 200
+    assert response.status_code == 200 # checks for a valid  200 ok status response  for successfull login
     data = response.get_json()
     assert 'Login successful' in data['message']
     assert 'access_token' in data
 
 
 def test_login_invalid_password(client, user_data):
-    """Tests login fails with invalid password."""
-    # 1. Register the user first
+    #Tests login fails with invalid password.
+    #  Register the user first
     client.post('/auth/register', data=json.dumps(user_data), content_type='application/json')
     
-    # 2. Attempt login with wrong password
+    #  Attempt login with wrong password
     invalid_data = user_data.copy()
     invalid_data['password'] = 'wrongpassword'
 
@@ -121,19 +119,19 @@ def test_login_invalid_password(client, user_data):
         data=json.dumps(invalid_data),
         content_type='application/json'
     )
-    assert response.status_code == 401
+    assert response.status_code == 401 ##checks for 401 unauthorized response for invalid credentials
     assert 'Invalid credentials' in response.get_json()['message']
 
 
 def test_login_user_not_found(client, user_data):
-    """Tests login fails if the user does not exist."""
-    # Do not register the user
+    #Tests login fails if the user does not exist.
+    # The login logic attempts to fetch the user. Since the user doesn't exist, 
     response = client.post(
         '/auth/login',
         data=json.dumps(user_data),
         content_type='application/json'
     )
-    # The login logic attempts to fetch the user. Since the user doesn't exist, 
+    #
     # the check_password part is skipped, leading to the 401.
     assert response.status_code == 401
     assert 'Invalid credentials' in response.get_json()['message']
