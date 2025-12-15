@@ -25,6 +25,6 @@ Technology Stack
 
 
 *** Steps to clone  and run locally :- ****
-create a folder 
-git clone [https://github.com/snahanku/Sweets-Management-System.git](https://github.com/snahanku/Sweets-Management-System.git)
-cd backend
+* create a folder 
+* git clone [https://github.com/snahanku/Sweets-Management-System.git](https://github.com/snahanku/Sweets-Management-System.git)
+* cd backend
