@@ -193,6 +193,28 @@ def create_app(test_config=None):
         if not all([ field in data for field in req_attributes]):
            return jsonify({"message":"missing required fields"}) 
         
+        #### Adding a fix##
+        try:
+        # Validate Price
+          price = float(data['price']) 
+          if price <= 0:
+            return jsonify(message="Price must be a positive number"), 400
+        except (ValueError, TypeError):
+        # This block catches non-numeric input (like "not_a_number")
+          return jsonify(message="Price must be a valid number"), 400
+
+        try:
+        # Validate Quantity
+           quantity = int(data['quantity'])
+           if quantity < 0:
+             return jsonify(message="Quantity cannot be negative"), 400
+        except (ValueError, TypeError):
+        # This block catches non-integer input
+          return jsonify(message="Quantity must be a whole number"), 400
+        #####
+
+
+
         try:
             new_sweet = Sweet(
                 name=data['name'],
@@ -324,7 +346,11 @@ def create_app(test_config=None):
             
         # 6. Convert to list of dictionaries and return
         sweets_list = [sweet.convert_to_dict() for sweet in sweets]
-        return jsonify(sweets_list), 200
+        return jsonify({
+    # Return the list under the same key for consistency
+    "message": f"Found {len(sweets_list)} sweets.",
+    "sweets": sweets_list
+}), 200
 
     
     @app.route('/api/sweets/<int:sweet_id>', methods=['DELETE'])
@@ -333,6 +359,7 @@ def create_app(test_config=None):
          
         current_user_id = get_jwt_identity() 
         current_user = db.session.get(User_Details, current_user_id)
+
 
         if not current_user or current_user.role != 'admin':
           return jsonify({"message": "Access Forbidden: Admin privileges required"}), 403
@@ -416,8 +443,6 @@ def create_app(test_config=None):
     @jwt_required()
     def restock_sweet(sweet_id):
         
-
-
         current_user_id = get_jwt_identity() 
         current_user = db.session.get(User_Details, current_user_id)
         current_user_role = current_user.role
