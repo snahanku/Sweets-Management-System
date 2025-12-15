@@ -24,5 +24,5 @@ Technology Stack
 * **Security:** `werkzeug.security`
 
   ```bash
-git clone <your-repository-url>
-cd <your-project-directory>
+git clone [<your-repository-url>](https://github.com/snahanku/Sweets-Management-System.git)
+cd backend
