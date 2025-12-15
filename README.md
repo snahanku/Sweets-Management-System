@@ -171,7 +171,7 @@ pytest tests/test_auth.py
 
 ✅ Validates user registration, login, and JWT token generation.
 
-<img width="1654" height="167" alt="image" src="https://github.com/user-attachments/assets/82711c5b-646a-4ff9-98f0-fb48aefa4841" />
+<img width="1657" height="167" alt="image" src="https://github.com/user-attachments/assets/af9808e6-12d9-40c1-9e51-260cca262c1f" />
 
 
 ---
@@ -192,7 +192,7 @@ pytest tests/test_admin.py
 
 ✅ Ensures restricted endpoints are accessible **only** to admin users.
 
-<img width="1659" height="180" alt="image" src="https://github.com/user-attachments/assets/832c6e7f-e92b-4785-b926-0983bbad5202" />
+<img width="1648" height="126" alt="image" src="https://github.com/user-attachments/assets/06f313e3-bfa5-4d70-a908-ecc592d8440f" />
 
 
 ---
@@ -213,80 +213,100 @@ pytest tests/test_sweet.py
 
 ✅ Covers add, update, search, purchase, and stock validation workflows.
 
-<img width="1662" height="187" alt="image" src="https://github.com/user-attachments/assets/8f289566-55b3-4834-9120-8e47cb6f9c2c" />
+<img width="1662" height="187" alt="image" src="https://github.com/user-attachments/assets/1e2eb3dc-886e-48e7-8b91-32cc68dfb986" />
 
 
 ---
 
-
+### 🧠 Pro Tip
 
 Run **all test suites together** with:
 
 ```bash
 pytest
 ```
-**🤖 My AI Usage**
 
-This project was developed primarily through manual coding and design decisions, with AI tools used selectively as productivity and clarity aids — not as automatic code generators.
+This provides a complete health check of the application.
 
-*AI Tools Used*
+---
 
-*Google Gemini
-Used mainly for brainstorming and validating backend design decisions.
+## 📌 Final Notes
 
-*ChatGPT
-Used for refining documentation, explanations, and improving overall readability.
+* SQLite is used for development and testing; the system can be easily migrated to PostgreSQL or MySQL.
+* JWT tokens must be sent via the `Authorization` header:
 
+  ```
+  Authorization: Bearer <access_token>
+  ```
 
-**🧩 The "How" — How I Used AI**
-1️⃣ API Design & Brainstorming (Google Gemini)
+---
 
-* During the early stages of development, I used Gemini to:
+🚀 *Built with backend best practices, clean architecture, and test-driven confidence.*
+
+---
+
+## 🤖 My AI Usage
+
+This project was developed primarily through **manual coding and design decisions**, with AI tools used **selectively** as productivity and clarity aids — **not** as automatic code generators.
+
+---
+
+### 🔧 AI Tools Used
+
+* **Google Gemini**
+  Used mainly for brainstorming and validating backend design decisions.
+
+* **ChatGPT**
+  Used for refining documentation, explanations, and improving overall readability.
+
+---
+
+### 🧩 The "How" — How I Used AI
+
+#### 1️⃣ API Design & Brainstorming (Google Gemini)
+
+During the early stages of development, I used **Gemini** to:
 
 * Brainstorm RESTful API endpoint structures
-
 * Validate naming conventions for:
 
-* Authentication routes
+  * Authentication routes
+  * Inventory management routes
+  * Search and filtering endpoints
+  * Purchase and admin-only actions
+* Think through **role-based access control flows** (Public vs User vs Admin)
+* Clarify expected request/response behavior for edge cases such as:
 
-* Inventory management routes
+  * Insufficient stock
+  * Invalid inputs
+  * Unauthorized access
 
-* Search and filtering endpoints
+---
 
-* Purchase and admin-only actions
-
-*Think through role-based access control flows (Public vs User vs Admin)
-
-
-
-**📈 Impact of AI on My Workflow**
+### 📈 Impact of AI on My Workflow
 
 Using AI tools helped me to:
 
-* Think faster about API structure before writing code
-
+* Think faster about API structure **before writing code**
 * Reduce time spent on documentation formatting
+* Improve clarity and confidence in architectural decisions
 
-*Improve clarity and confidence in architectural decisions
+---
 
+### ⚖️ Ownership & Code Responsibility
 
-**Ownership & Code Responsibility**
+* **Core backend logic**:
+  Approximately a **60–40 split**, where I implemented the main logic manually, and AI (ChatGPT/Gemini) helped assess edge cases and validate scenarios — saving time without reducing ownership.
 
-* ***Core backend logic:***
-Approximately a 60–40 split, where I implemented the main logic manually, and AI (ChatGPT/Gemini) helped assess edge cases and validate scenarios — saving time without reducing ownership.
+* **Flask routes**:
+  High-level route ideas and boilerplate were reviewed with Gemini, but **all route implementations were written manually**.
 
-* ***Flask routes:***
-High-level route ideas and boilerplate were reviewed with Gemini, but all route implementations were written manually.
+* **SQLAlchemy models**:
+  Gemini suggested possible model attributes to ensure all necessary fields were considered, while the final schema design and implementation were done by me.
 
-* ***SQLAlchemy models:***
-Gemini suggested possible model attributes to ensure all necessary fields were considered, while the final schema design and implementation were done by me.
+* **JWT authentication**:
+  JWT was manually implemented for registration and login flows. Gemini assisted in reasoning about **where authentication and authorization checks should be enforced**.
 
-* ***JWT authentication:***
-JWT was manually implemented for registration and login flows. Gemini assisted in reasoning about where authentication and authorization checks should be enforced.
+---
 
-
-
-
-
-
-
+✅ **Summary**: AI acted as a **design assistant and reviewer**, while the **entire codebase, logic, and testing remain my own work**.
