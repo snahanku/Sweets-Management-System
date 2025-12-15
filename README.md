@@ -1,25 +1,41 @@
 # 🍬 Sweet Shop Inventory API
 
-A robust, secure, and scalable **RESTful API** built using **Flask**, **SQLAlchemy**, and **Flask-JWT-Extended** to manage a sweet shop’s inventory, handle sales transactions, and enforce **role-based access control (Admin/User)**.
+A **clean, secure, and production-ready RESTful API** built with **Flask**, **SQLAlchemy**, and **Flask-JWT-Extended** to manage a sweet shop’s inventory, handle sales transactions, and enforce **role-based access control (Admin/User)**.
+
+This project is designed with **scalability, security, and testability** in mind, making it suitable for real-world backend systems, assignments, and interviews.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-* 🔐 **Authentication**
-  User registration and JWT-based login (`/auth/*`).
+### 🔐 Authentication & Authorization
 
-* 📦 **Inventory Management**
-  Full CRUD operations for sweets. Admin-only actions include deletion and restocking.
+* User registration and login using **JWT tokens** (`/auth/*`).
+* Role-based access control with **Admin** and **User** permissions.
 
-* 🛒 **Sales & Transactions**
-  Secure purchase endpoint that deducts stock atomically.
+### 📦 Inventory Management
 
-* 🔍 **Search & Filtering**
-  Dynamic search by **name**, **category**, and **price range**.
+* Full CRUD operations for sweet items.
+* Admin-only privileges for **restocking** and **deleting** items.
 
-* 🛡️ **Security**
-  Password hashing using `werkzeug.security` and strict admin-role enforcement.
+### 🛒 Sales & Transactions
+
+* Secure purchase endpoint that **atomically deducts stock**.
+* Prevents over-selling and invalid purchases.
+
+### 🔍 Advanced Search & Filtering
+
+* Search sweets dynamically by:
+
+  * Name
+  * Category
+  * Minimum & Maximum price
+
+### 🛡️ Security Best Practices
+
+* Password hashing using `werkzeug.security`.
+* JWT-protected endpoints.
+* Strict enforcement of admin-only routes.
 
 ---
 
@@ -49,13 +65,13 @@ cd backend
 
 ---
 
-### 2️⃣ Set Up Virtual Environment
+### 2️⃣ Create a Virtual Environment
 
 ```bash
 python3 -m venv venv
 ```
 
-#### Activate the Environment
+#### Activate the Virtual Environment
 
 ```bash
 # macOS / Linux
@@ -77,26 +93,29 @@ pip install -r requirements.txt
 
 ## ▶️ Running the Application
 
-### Set Flask App
+### Configure Flask
 
 ```bash
-export FLASK_APP=app.py   # macOS / Linux
-set FLASK_APP=app.py      # Windows
+# macOS / Linux
+export FLASK_APP=app.py
+
+# Windows
+set FLASK_APP=app.py
 ```
 
-### Initialize Database
+### Initialize the Database
 
 ```bash
 flask shell
 ```
 
-### Start the Server
+### Start the Development Server
 
 ```bash
 flask run
 ```
 
-The server will start at:
+The API will be available at:
 
 ```
 http://127.0.0.1:5000/
@@ -104,60 +123,110 @@ http://127.0.0.1:5000/
 
 ---
 
-## 🧪 Running Tests
+## 📚 API Endpoints Reference
+
+| Endpoint                    | Method | Role Required | Description                                |
+| --------------------------- | ------ | ------------- | ------------------------------------------ |
+| `/auth/register`            | POST   | Public        | Register a new user (username & password). |
+| `/auth/login`               | POST   | Public        | Login and receive a JWT access token.      |
+| `/api/add-sweets`           | POST   | User / Admin  | Add a new sweet to the inventory.          |
+| `/api/get_all_sweets`       | GET    | User / Admin  | Fetch all sweets from inventory.           |
+| `/api/sweets/<id>`          | PUT    | User / Admin  | Update sweet details (name, price, etc.).  |
+| `/api/sweets/search`        | GET    | User / Admin  | Search by name, category, and price range. |
+| `/api/sweets/<id>/purchase` | POST   | User / Admin  | Purchase a sweet and deduct stock.         |
+| `/api/sweets/<id>/restock`  | POST   | Admin         | Increase stock quantity of a sweet.        |
+| `/api/sweets/<id>/delete`   | DELETE | Admin         | Permanently delete a sweet item.           |
+
+---
+
+## ✅ Role-Based Access Control
+
+| Role       | Permissions                            |
+| ---------- | -------------------------------------- |
+| **Public** | Register, Login                        |
+| **User**   | View, Search, Purchase, Update sweets  |
+| **Admin**  | Full access including Restock & Delete |
+
+---
+
+## 🧪 Testing Strategy
+
+The project includes **well-structured Pytest test suites** to ensure correctness, security, and role-based behavior across all major components.
+
+---
+
+### 🔐 Authentication Tests
+
+Authentication endpoints are tested in:
+
+```
+tests/test_auth.py
+```
+
+Run:
+
+```bash
+pytest tests/test_auth.py
+```
+
+✅ Validates user registration, login, and JWT token generation.
+
+<p align="center">
+  <img width="1654" height="233" alt="Auth Tests Output" src="https://github.com/user-attachments/assets/ae6cfec2-6e01-4919-b6b3-45992c03bafa" />
+</p>
+
+---
+
+### 🛡️ Admin Endpoint Tests
+
+Admin-only functionality is tested in:
+
+```
+tests/test_admin.py
+```
+
+Run:
+
+```bash
+pytest tests/test_admin.py
+```
+
+✅ Ensures restricted endpoints are accessible **only** to admin users.
+
+<p align="center">
+  <img width="1657" height="173" alt="Admin Tests Output" src="https://github.com/user-attachments/assets/783a1c37-7902-411e-9cdb-7f7447ed5933" />
+</p>
+
+---
+
+### 🍭 Sweet Inventory Tests
+
+All inventory-related operations are tested in:
+
+```
+tests/test_sweet.py
+```
+
+Run:
+
+```bash
+pytest tests/test_sweet.py
+```
+
+✅ Covers add, update, search, purchase, and stock validation workflows.
+
+<p align="center">
+  <img width="1665" height="197" alt="Sweet Tests Output" src="https://github.com/user-attachments/assets/b93fc944-8665-4e90-9899-2be49f973ba4" />
+</p>
+
+---
+
+
+
+Run **all test suites together** with:
 
 ```bash
 pytest
 ```
 
----
 
-## 📚 API Endpoints Reference
-
-| Endpoint                    | Method | Role Required | Description                                      |
-| --------------------------- | ------ | ------------- | ------------------------------------------------ |
-| `/auth/register`            | POST   | Public        | Registers a new user (username, password).       |
-| `/auth/login`               | POST   | Public        | Authenticates user and returns JWT access token. |
-| `/api/add-sweets`           | POST   | User / Admin  | Adds a new sweet to the inventory.               |
-| `/api/get_all_sweets`       | GET    | User / Admin  | Retrieves all sweets from inventory.             |
-| `/api/sweets/<id>`          | PUT    | User / Admin  | Updates sweet details (name, price, etc.).       |
-| `/api/sweets/search`        | GET    | User / Admin  | Search sweets by name, category, min/max price.  |
-| `/api/sweets/<id>/purchase` | POST   | User / Admin  | Purchases a sweet and deducts stock.             |
-| `/api/sweets/<id>/restock`  | POST   | Admin         | Restocks a sweet item.                           |
-| `/api/sweets/<id>/delete`   | DELETE | Admin         | Permanently deletes a sweet from inventory.      |
-
----
-
-## ✅ Role-Based Access Summary
-
-* **Public** → Register & Login
-* **User** → View, Search, Purchase, Update sweets
-* **Admin** → Full control (Restock & Delete)
-
----
-
-## 📌 Notes
-
-* SQLite is used for development/testing.
-* JWT tokens must be passed via the `Authorization` header as:
-
-  ```
-  Authorization: Bearer <token>
-  ```
-
----
-
-💡 *This API is designed to be easily extendable for production-grade databases, caching, and deployment pipelines.*
-
-
-
-
-
-
-
-
-
-
-
-
- 
