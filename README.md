@@ -171,9 +171,8 @@ pytest tests/test_auth.py
 
 ✅ Validates user registration, login, and JWT token generation.
 
-<p align="center">
-  <img width="1654" height="233" alt="Auth Tests Output" src="https://github.com/user-attachments/assets/ae6cfec2-6e01-4919-b6b3-45992c03bafa" />
-</p>
+<img width="1654" height="167" alt="image" src="https://github.com/user-attachments/assets/82711c5b-646a-4ff9-98f0-fb48aefa4841" />
+
 
 ---
 
@@ -193,9 +192,8 @@ pytest tests/test_admin.py
 
 ✅ Ensures restricted endpoints are accessible **only** to admin users.
 
-<p align="center">
-  <img width="1657" height="173" alt="Admin Tests Output" src="https://github.com/user-attachments/assets/783a1c37-7902-411e-9cdb-7f7447ed5933" />
-</p>
+<img width="1659" height="180" alt="image" src="https://github.com/user-attachments/assets/832c6e7f-e92b-4785-b926-0983bbad5202" />
+
 
 ---
 
@@ -215,9 +213,8 @@ pytest tests/test_sweet.py
 
 ✅ Covers add, update, search, purchase, and stock validation workflows.
 
-<p align="center">
-  <img width="1665" height="197" alt="Sweet Tests Output" src="https://github.com/user-attachments/assets/b93fc944-8665-4e90-9899-2be49f973ba4" />
-</p>
+<img width="1662" height="187" alt="image" src="https://github.com/user-attachments/assets/8f289566-55b3-4834-9120-8e47cb6f9c2c" />
+
 
 ---
 
