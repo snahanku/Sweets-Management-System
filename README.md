@@ -18,3 +18,11 @@ Technology Stack
 * **Security:** `werkzeug.security`
 
 ***Setup and Installation***
+* **Framework:** Python 3.x, Flask
+* **Database:** SQLAlchemy (SQLite for development/testing)
+* **Authentication:** Flask-JWT-Extended
+* **Security:** `werkzeug.security`
+
+  ```bash
+git clone <your-repository-url>
+cd <your-project-directory>
