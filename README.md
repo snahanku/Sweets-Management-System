@@ -9,3 +9,12 @@ Features
 * **Sales & Transactions:** Secure purchase endpoint to decrease stock (`/purchase`).
 * **Search & Filtering:** Dynamic searching by name, category, and price range.
 * **Security:** Password hashing (using `werkzeug.security`) and Admin role enforcement.
+
+Technology Stack
+
+* **Framework:** Python 3.x, Flask
+* **Database:** SQLAlchemy (SQLite for development/testing)
+* **Authentication:** Flask-JWT-Extended
+* **Security:** `werkzeug.security`
+
+***Setup and Installation***
