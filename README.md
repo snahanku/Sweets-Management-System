@@ -1,70 +1,154 @@
-*Sweet Shop Inventory API*
+# 🍬 Sweet Shop Inventory API
 
-A robust RESTful API built with Flask, SQLAlchemy, and Flask-JWT-Extended to manage a sweet shop's inventory, handle sales transactions, and implement role-based access control (Admin/User).
+A robust, secure, and scalable **RESTful API** built using **Flask**, **SQLAlchemy**, and **Flask-JWT-Extended** to manage a sweet shop’s inventory, handle sales transactions, and enforce **role-based access control (Admin/User)**.
 
-Features
+---
 
-* **Authentication:** User registration and JWT-based login (`/auth/*`).
-* **Inventory Management:** CRUD operations for sweets (Admin-only for deletion/restock).
-* **Sales & Transactions:** Secure purchase endpoint to decrease stock (`/purchase`).
-* **Search & Filtering:** Dynamic searching by name, category, and price range.
-* **Security:** Password hashing (using `werkzeug.security`) and Admin role enforcement.
+## ✨ Features
 
-Technology Stack
+* 🔐 **Authentication**
+  User registration and JWT-based login (`/auth/*`).
 
-* **Framework:** Python 3.x, Flask
-* **Database:** SQLAlchemy (SQLite for development/testing)
-* **Authentication:** Flask-JWT-Extended
-* **Security:** `werkzeug.security`
+* 📦 **Inventory Management**
+  Full CRUD operations for sweets. Admin-only actions include deletion and restocking.
 
-***Setup and Installation***
-* **Framework:** Python 3.x, Flask
-* **Database:** SQLAlchemy (SQLite for development/testing)
-* **Authentication:** Flask-JWT-Extended
-* **Security:** `werkzeug.security`
+* 🛒 **Sales & Transactions**
+  Secure purchase endpoint that deducts stock atomically.
 
+* 🔍 **Search & Filtering**
+  Dynamic search by **name**, **category**, and **price range**.
 
-*** Steps to clone  and run locally :- ****
-* create a folder 
-* git clone [https://github.com/snahanku/Sweets-Management-System.git](https://github.com/snahanku/Sweets-Management-System.git)
-* cd backend
+* 🛡️ **Security**
+  Password hashing using `werkzeug.security` and strict admin-role enforcement.
 
-Set Up the virtual Environment
---> python3 -m venv venv
+---
 
-Activate the virtual environment
-source venv/bin/activate  # macOS/Linux
- venv\Scripts\activate   # Windows
+## 🛠️ Technology Stack
 
-Install Dependencies
+| Layer          | Technology                                  |
+| -------------- | ------------------------------------------- |
+| Language       | Python 3.x                                  |
+| Framework      | Flask                                       |
+| Database       | SQLAlchemy (SQLite for development/testing) |
+| Authentication | Flask-JWT-Extended                          |
+| Security       | werkzeug.security                           |
+| Testing        | Pytest                                      |
+
+---
+
+## 🚀 Setup & Installation
+
+### 1️⃣ Clone the Repository
+
+```bash
+mkdir sweet-shop
+cd sweet-shop
+git clone https://github.com/snahanku/Sweets-Management-System.git
+cd backend
+```
+
+---
+
+### 2️⃣ Set Up Virtual Environment
+
+```bash
+python3 -m venv venv
+```
+
+#### Activate the Environment
+
+```bash
+# macOS / Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
+---
 
-Running the Application
-# Set Flask application to the app.py file
-export FLASK_APP=app.py
-# Run data base creation  command
+## ▶️ Running the Application
+
+### Set Flask App
+
+```bash
+export FLASK_APP=app.py   # macOS / Linux
+set FLASK_APP=app.py      # Windows
+```
+
+### Initialize Database
+
+```bash
 flask shell
+```
 
+### Start the Server
 
-**Start the Server**
-* flask run
+```bash
+flask run
+```
 
-***Running Tests***
+The server will start at:
+
+```
+http://127.0.0.1:5000/
+```
+
+---
+
+## 🧪 Running Tests
+
+```bash
 pytest
+```
 
+---
 
-***API Endpoints Reference***
-Endpoint,Method,Role Required,Description
-/auth/register,POST,Public,"Registers a new user (username, password)."
-/auth/login,POST,Public,"Logs in a user, returns JWT access token."
-/api/add-sweets,POST,User/Admin,Adds a new sweet to the inventory.
-/api/get_all_sweets,GET,User/Admin,Lists all sweets in the inventory.
-/api/sweets/<id>,PUT,User/Admin,"Updates sweet details (e.g., price, name)."
-/api/sweets/search,GET,User/Admin,"Searches by name, category, min_price, max_price."
-/api/sweets/<id>/purchase,POST,User/Admin,Processes a sale and deducts stock.
-/api/sweets/<id>/restock,POST,Admin,Increases the stock quantity.
-/api/sweets/<id>/delete,DELETE,Admin,Permanently deletes a sweet item.
+## 📚 API Endpoints Reference
+
+| Endpoint                    | Method | Role Required | Description                                      |
+| --------------------------- | ------ | ------------- | ------------------------------------------------ |
+| `/auth/register`            | POST   | Public        | Registers a new user (username, password).       |
+| `/auth/login`               | POST   | Public        | Authenticates user and returns JWT access token. |
+| `/api/add-sweets`           | POST   | User / Admin  | Adds a new sweet to the inventory.               |
+| `/api/get_all_sweets`       | GET    | User / Admin  | Retrieves all sweets from inventory.             |
+| `/api/sweets/<id>`          | PUT    | User / Admin  | Updates sweet details (name, price, etc.).       |
+| `/api/sweets/search`        | GET    | User / Admin  | Search sweets by name, category, min/max price.  |
+| `/api/sweets/<id>/purchase` | POST   | User / Admin  | Purchases a sweet and deducts stock.             |
+| `/api/sweets/<id>/restock`  | POST   | Admin         | Restocks a sweet item.                           |
+| `/api/sweets/<id>/delete`   | DELETE | Admin         | Permanently deletes a sweet from inventory.      |
+
+---
+
+## ✅ Role-Based Access Summary
+
+* **Public** → Register & Login
+* **User** → View, Search, Purchase, Update sweets
+* **Admin** → Full control (Restock & Delete)
+
+---
+
+## 📌 Notes
+
+* SQLite is used for development/testing.
+* JWT tokens must be passed via the `Authorization` header as:
+
+  ```
+  Authorization: Bearer <token>
+  ```
+
+---
+
+💡 *This API is designed to be easily extendable for production-grade databases, caching, and deployment pipelines.*
+
 
 
 
