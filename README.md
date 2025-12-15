@@ -308,5 +308,3 @@ Using AI tools helped me to:
   JWT was manually implemented for registration and login flows. Gemini assisted in reasoning about **where authentication and authorization checks should be enforced**.
 
 ---
-
-✅ **Summary**: AI acted as a **design assistant and reviewer**, while the **entire codebase, logic, and testing remain my own work**.
